@@ -21,6 +21,6 @@ RUN apt update \
 
 RUN gem install one_gadget
 
-RUN sed -i "1s/.*/root:\$6\$NrFUrVGe\$oATAvNu8a/wGQRxQLp2FQsJlZQB5S5NdHB.IwPp/hqRPd6U7eZaSaTMe7NgmDxzrEvi2B1ntWKP2GkRLRMA8T/:17684:0:99999:7:::/" /etc/shadow
+RUN sed -i "1s/.*/root:\$6\$NrFUrVGe\$oATAvNu8a\/wGQRxQLp2FQsJlZQB5S5NdHB.IwPp\/hqRPd6U7eZaSaTMe7NgmDxzrEvi2B1ntWKP2GkRLRMA8T\/:17684:0:99999:7:::/" /etc/shadow
 
 RUN pip install virtualenv

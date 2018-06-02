@@ -6,6 +6,8 @@
 #include <signal.h>
 #include <string.h>
 
+#define IMAGE "nearffxx/ubuntu:18.04"
+
 void sigh(int signum) {
     system("docker rm -f $(echo $USER$SSH_TTY | tr / _)");
 }
@@ -38,11 +40,11 @@ void dockerit(char *ssh_cmd) {
     char *SSH_AUTH_SOCKv = cmd("echo -n SSH_AUTH_SOCK:$SSH_AUTH_SOCK");
 
     if (ssh_cmd && !strncmp(ssh_cmd, "scp ", 4))
-        execl("/usr/bin/docker", "docker", "run", "--rm", "-i", "--cpus=4", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, "secbin", "bash", "-c", ssh_cmd, NULL);
+        execl("/usr/bin/docker", "docker", "run", "--rm", "-i", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "bash", "-c", ssh_cmd, NULL);
     else if(SSH_AUTH_SOCK)
-        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=4", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-e", SSH_AUTH_SOCKe, "-v", SSH_AUTH_SOCKv, "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, "secbin", "bash", "-c", "bash", NULL);
+        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-e", SSH_AUTH_SOCKe, "-v", SSH_AUTH_SOCKv, "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "bash", "-c", "bash", NULL);
     else
-        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=4", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, "secbin", "bash", "-c", "bash", NULL);
+        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "bash", "-c", "bash", NULL);
 
     free(HOMEHOME);
     free(UIDGID);

@@ -15,4 +15,12 @@ RUN git clone https://github.com/pwndbg/pwndbg \
     && cp /root/.gdbinit /etc/gdb/gdbinit \
     && apt clean
 
+RUN apt update \
+    && apt install -y ruby-full \
+    && apt clean
+
+RUN gem install one_gadget
+
+RUN sed -i "1s/.*/root:$6$NrFUrVGe$oATAvNu8a/wGQRxQLp2FQsJlZQB5S5NdHB.IwPp/hqRPd6U7eZaSaTMe7NgmDxzrEvi2B1ntWKP2GkRLRMA8T/:17684:0:99999:7:::/" /etc/shadow
+
 RUN pip install virtualenv

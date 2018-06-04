@@ -36,8 +36,7 @@ void dockerit(char *ssh_cmd) {
     char *UIDGID = cmd("echo -n $( id -u $USER ):$( id -g $USER )");
     char *NAME = cmd("echo -n $USER");
     char *SSH_AUTH_SOCK = getenv("SSH_AUTH_SOCK");
-    char *SSH_AUTH_SOCKe = cmd("echo -n \"SSH_AUTH_SOCK:$SSH_AUTH_SOCK\"");
-    char *SSH_AUTH_SOCKv = cmd("echo -n \"$SSH_AUTH_SOCK:$SSH_AUTH_SOCK\"");
+    char *SSH_AUTH_SOCKv = cmd("echo -n $SSH_AUTH_SOCK:$SSH_AUTH_SOCK");
     char *RUNNING = cmd("docker inspect -f {{.State.Running}} $USER");
 
     if (ssh_cmd && !strncmp(ssh_cmd, "scp ", 4))
@@ -45,7 +44,7 @@ void dockerit(char *ssh_cmd) {
     else if(!strncmp(RUNNING, "true", 4))
     	execl("/usr/bin/docker", "docker", "attach", NAME, NULL);
     else if(SSH_AUTH_SOCK)
-        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-e", SSH_AUTH_SOCKe, "-v", SSH_AUTH_SOCKv, "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "tmux", "new", "-t", "0", NULL);
+        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-e", "SSH_AUTH_SOCK", "-v", SSH_AUTH_SOCKv, "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "tmux", "new", "-t", "0", NULL);
     else
         execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "tmux", "new", "-t", "0", NULL);
 
@@ -60,7 +59,7 @@ int main(int argc, char *argv[])
     int wstatus;
     char *ssh_cmd;
 
-    freopen( "/dev/null", "w", stderr);
+    //freopen( "/dev/null", "w", stderr);
 
     setuid(0);
 

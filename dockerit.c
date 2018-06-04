@@ -45,9 +45,9 @@ void dockerit(char *ssh_cmd) {
     else if(!strncmp(RUNNING, "true", 4))
     	execl("/usr/bin/docker", "docker", "attach", NAME, NULL);
     else if(SSH_AUTH_SOCK)
-        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-e", SSH_AUTH_SOCKe, "-v", SSH_AUTH_SOCKv, "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "bash", "-c", "bash", NULL);
+        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-e", SSH_AUTH_SOCKe, "-v", SSH_AUTH_SOCKv, "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "tmux", "new", "-t", "0", NULL);
     else
-        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "bash", "-c", "bash", NULL);
+        execl("/usr/bin/docker", "docker", "run", "--rm", "-it", "--cpus=1", "--memory=8g", "--net=host", "--cap-add=SYS_PTRACE", "-v", "/etc/group:/etc/group:ro", "-v", "/etc/passwd:/etc/passwd:ro", "-v", HOMEHOME, "--workdir", HOME, "--hostname", "docker", "-u", UIDGID, "--name", NAME, IMAGE, "tmux", "new", "-t", "0", NULL);
 
     free(HOMEHOME);
     free(UIDGID);

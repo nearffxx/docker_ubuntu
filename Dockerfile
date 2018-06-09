@@ -11,7 +11,7 @@ RUN apt update \
 
 RUN dpkg --add-architecture i386 \
     && apt update \
-    && apt -y install libc6-dbg libc6-dbg:i386
+    && apt -y install libc6-dbg libc6-dbg:i386 \
     && apt clean
 
 RUN apt update \
